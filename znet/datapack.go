@@ -28,22 +28,22 @@ func(dp *DataPack) Pack(msg ziface.IMessage)([]byte, error) {
 	dataBuff := bytes.NewBuffer([]byte{})
 
 	//写msgID
-	if err := binary.Write(dataBuff, binary.LittleEndian, msg.GetMsgId()); err != nil {
+	if err := binary.Write(dataBuff, binary.BigEndian, msg.GetMsgId()); err != nil {
 		return nil, err
 	}
 
 	//写dataLen
-	if err := binary.Write(dataBuff, binary.LittleEndian, msg.GetDataLen()); err != nil {
+	if err := binary.Write(dataBuff, binary.BigEndian, msg.GetDataLen()); err != nil {
 		return nil, err
 	}
 
 	//写Crc32校验码
-	if err := binary.Write(dataBuff, binary.LittleEndian, msg.GetCrc32Num()); err != nil {
+	if err := binary.Write(dataBuff, binary.BigEndian, msg.GetCrc32Num()); err != nil {
 		return nil, err
 	}
 
 	//写data数据
-	if err := binary.Write(dataBuff, binary.LittleEndian, msg.GetData()); err != nil {
+	if err := binary.Write(dataBuff, binary.BigEndian, msg.GetData()); err != nil {
 		return nil ,err
 	}
 
@@ -58,17 +58,17 @@ func(dp *DataPack) Unpack(binaryData []byte)(ziface.IMessage, error) {
 	msg := &Message{}
 
 	//读msgID
-	if err := binary.Read(dataBuff, binary.LittleEndian, &msg.Head.Id); err != nil {
+	if err := binary.Read(dataBuff, binary.BigEndian, &msg.Head.Id); err != nil {
 		return nil, err
 	}
 
 	//读dataLen
-	if err := binary.Read(dataBuff, binary.LittleEndian, &msg.Head.DataLen); err != nil {
+	if err := binary.Read(dataBuff, binary.BigEndian, &msg.Head.DataLen); err != nil {
 		return nil, err
 	}
 
 	//读Crc32校验码
-	if err := binary.Read(dataBuff, binary.LittleEndian, &msg.Head.Crc32Num); err != nil {
+	if err := binary.Read(dataBuff, binary.BigEndian, &msg.Head.Crc32Num); err != nil {
 		return nil, err
 	}
 

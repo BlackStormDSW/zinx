@@ -36,12 +36,12 @@ func (this *TcpClient) Unpack(headdata []byte) (head *Message, err error) {
 	head = &Message{}
 
 	// 读取Len
-	if err = binary.Read(headbuf, binary.LittleEndian, &head.Len); err != nil {
+	if err = binary.Read(headbuf, binary.BigEndian, &head.Len); err != nil {
 		return nil, err
 	}
 
 	// 读取MsgId
-	if err = binary.Read(headbuf, binary.LittleEndian, &head.MsgId); err != nil {
+	if err = binary.Read(headbuf, binary.BigEndian, &head.MsgId); err != nil {
 		return nil, err
 	}
 
@@ -56,16 +56,16 @@ func (this *TcpClient) Unpack(headdata []byte) (head *Message, err error) {
 func (this *TcpClient) Pack(msgId uint32, dataBytes []byte) (out []byte, err error) {
 	outbuff := bytes.NewBuffer([]byte{})
 	// 写Len
-	if err = binary.Write(outbuff, binary.LittleEndian, uint32(len(dataBytes))); err != nil {
+	if err = binary.Write(outbuff, binary.BigEndian, uint32(len(dataBytes))); err != nil {
 		return
 	}
 	// 写MsgId
-	if err = binary.Write(outbuff, binary.LittleEndian, msgId); err != nil {
+	if err = binary.Write(outbuff, binary.BigEndian, msgId); err != nil {
 		return
 	}
 
 	//all pkg data
-	if err = binary.Write(outbuff, binary.LittleEndian, dataBytes); err != nil {
+	if err = binary.Write(outbuff, binary.BigEndian, dataBytes); err != nil {
 		return
 	}
 

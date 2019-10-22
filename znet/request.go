@@ -19,3 +19,8 @@ func(r *Request) GetData() []byte {
 func (r *Request) GetMsgID() uint32 {
 	return r.msg.GetMsgId()
 }
+
+//获取请求的消息体的长度
+func (r *Request) GetDataLen() uint32 {
+	return r.msg.GetDataLen()
+}
